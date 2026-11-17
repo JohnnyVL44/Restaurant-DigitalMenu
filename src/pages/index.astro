@@ -1,0 +1,56 @@
+---
+import ProductCard from '../components/ProductCard.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import products from '../data/products.js';
+
+const categories = [
+  "Todas",
+  ...new Set(products.map(product => product.category))
+];
+
+const categoryCards = [
+  {
+    name: "Todas",
+    count: products.length
+  },
+  ...categories
+    .filter(category => category !== "Todas")
+    .map(category => ({
+      name: category,
+      count: products.filter(product => product.category === category).length
+    }))
+];
+---
+
+<MainLayout title="Menú Digital">
+  <h1 class="mb-8 text-3xl font-bold">
+    Menú Digital
+  </h1>
+
+  <section class="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
+    {categoryCards.map((category, index) => (
+      <CategoryCard
+        name={category.name}
+        count={category.count}
+        active={index === 0}
+      />
+    ))}
+  </section>
+
+  <section class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+    {products.map((product) => (
+      <ProductCard
+        name={product.name}
+        description={product.description}
+        price={product.price}
+        image={product.image}
+        category={product.category}
+      />
+    ))}
+  </section>
+
+  <script>
+    import '../scripts/index.js';
+  </script>
+</MainLayout>

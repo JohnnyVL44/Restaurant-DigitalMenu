@@ -1,0 +1,24 @@
+---
+interface Props {
+  name: string;
+  count: number;
+  active?: boolean;
+}
+
+const { name, count, active = false } = Astro.props;
+---
+
+<button
+  type="button"
+  data-category-filter={name}
+  aria-pressed={active}
+  class="flex flex-col items-start gap-2 rounded-xl border border-white/10 bg-white/5 p-5 text-left text-white transition-all duration-300 hover:-translate-y-1 hover:border-[#9a3412] hover:bg-[#9a3412] hover:shadow-lg hover:shadow-orange-900/30 aria-pressed:border-[#9a3412] aria-pressed:bg-[#9a3412]"
+>
+  <span class="text-lg font-semibold">
+    {name}
+  </span>
+
+  <span class="text-sm text-white/70">
+    {count} productos
+  </span>
+</button>
